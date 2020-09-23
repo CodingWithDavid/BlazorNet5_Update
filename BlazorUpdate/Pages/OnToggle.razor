@@ -1,0 +1,27 @@
+﻿
+@page "/ontogglePage"
+
+<h3>OnToggle</h3>
+
+<div>
+
+    <details id="details-toggle" @ontoggle="OnToggleRun">
+        <summary>Summary</summary>
+        <p>Detailed content</p>
+    </details>
+    @if (detailsExpanded)
+    {
+        <p>Read the details carefully!</p>
+        <img src="/blazorCode.png" width="300" height="300" />
+    }
+</div>
+
+@code {
+    bool detailsExpanded;
+    string message { get; set; }
+
+    void OnToggleRun()
+    {
+        detailsExpanded = !detailsExpanded;
+    }
+}

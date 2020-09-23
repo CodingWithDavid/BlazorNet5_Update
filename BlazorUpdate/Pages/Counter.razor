@@ -1,0 +1,68 @@
+﻿@page "/counter"
+
+<h1>New Input Radio Control</h1>
+
+@if (!opinions.Any())
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<EditForm Model="survey">
+    <InputRadioGroup @bind-Value="survey.OpinionAboutBlazor">
+        @foreach (var opinion in opinions)
+            {
+            <div class="form-check">
+                <InputRadio class="form-check-input" id="@opinion.id" Value="@opinion.id" />
+                <label class="form-check-label" for="@opinion.id">@opinion.label</label>
+            </div>
+            }
+    </InputRadioGroup>
+
+    <button @onclick="ShowMe">Show Me</button>
+</EditForm>
+
+<span>Option value selected is: @radioSelection</span>
+
+}
+    @code {
+
+        private List<inOptions> opinions = new List<inOptions>();
+        private SurveyOpts survey = new SurveyOpts();
+        private string radioSelection = "";
+
+        protected override async Task OnInitializedAsync()
+        {
+            inOptions o = new inOptions() { id = 1, label = "Great" };
+            opinions.Add(o);
+
+            o = new inOptions() { id = 2, label = "Good" };
+            opinions.Add(o);
+
+            o = new inOptions() { id = 3, label = "Best" };
+            opinions.Add(o);
+
+            o = new inOptions() { id = 4, label = "Better" };
+            opinions.Add(o);
+
+            await Task.CompletedTask;
+        }
+
+        public void ShowMe()
+        {
+            radioSelection = survey.OpinionAboutBlazor.ToString();
+        }
+
+        private class inOptions
+        {
+            public int id { get; set; }
+            public string label { get; set; }
+
+        }
+
+        public class SurveyOpts
+        {
+            public int OpinionAboutBlazor { get; set; }
+        }
+
+    }

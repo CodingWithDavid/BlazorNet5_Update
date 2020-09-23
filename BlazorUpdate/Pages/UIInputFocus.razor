@@ -1,0 +1,48 @@
+﻿
+@page "/UIFocus"
+<h3>UIInputFocus</h3>
+
+<EditForm Model="survey">
+    <label for="email">Email</label>
+    <input type="email" id="email" @bind="survey.Email" @ref=ReferenceToInputControl />
+</EditForm>
+
+
+
+@code {
+    ElementReference ReferenceToInputControl;
+
+
+    private List<inOptions> opinions = new List<inOptions>();
+    private SurveyOpts survey = new SurveyOpts();
+
+    ElementReference textText;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Focus(ReferenceToInputControl);
+        }
+        await Task.CompletedTask;
+    }
+
+    public async Task Focus(ElementReference textInput)
+    {
+        await textInput.FocusAsync();
+    }
+
+    private class inOptions
+    {
+        public int id { get; set; }
+        public string label { get; set; }
+
+    }
+
+    public class SurveyOpts
+    {
+        public int OpinionAboutBlazor { get; set; }
+        public string Email { get; set; }
+    }
+
+}
